@@ -1,6 +1,7 @@
 {
   "packages": [
     "classnames",
+    "google-map-react",
     "history",
     "immutable",
     "isomorphic-fetch",

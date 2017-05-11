@@ -61,6 +61,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
     "gm": "^1.23.0",
+    "google-map-react": "^0.24.0",
     "history": "^3.2.1",
     "immutable": "^3.7.5",
     "isomorphic-fetch": "^2.2.0",

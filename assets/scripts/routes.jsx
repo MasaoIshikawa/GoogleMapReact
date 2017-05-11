@@ -28,7 +28,7 @@ export default function({dispatch, getState}) {
   }
   return (
     <Route path='/' component={Root}>
-      <IndexRoute component={Map}/>
+      <IndexRoute component={Main}/>
       <Route path='main' component={Main} />
 	 </Route>
   )
