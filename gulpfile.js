@@ -60,6 +60,12 @@ var tasks = gtasks.buildSpec({
     dest: 'dist',
     watch: path.join('**', '*'),
   },
+  styles_sass: {
+    src: path.join('assets', 'styles', 'sass'),
+    pattern: 'style_sass.scss',
+    dest: 'dist',
+    watch: path.join('**', '*'),
+  },
   lint: {
     src: path.join('assets', 'scripts'),
     pattern: path.join('**', '*'),
@@ -146,6 +152,23 @@ gulp.task('styles_less', ['images'], function() {
     .pipe(hasher())
 })
 
+gulp.task('styles_sass', function() {
+  return gulp.src(tasks.styles_sass.src)
+    .pipe(sass({
+      includePaths: [
+        path.join(__dirname, 'node_modules')
+      ]
+    }))
+    .pipe(autoprefixer())
+    .pipe(buster())
+    .pipe(gulp.dest(tasks.styles_sass.dest))
+    .pipe(hasher())
+    .pipe(minifyCss({restructuring: false}))
+    .pipe(rename({extname: '.min.css'}))
+    .pipe(gulp.dest(tasks.styles_sass.dest))
+    .pipe(hasher())
+})
+
 gulp.task('lint', function() {
   return gulp.src(tasks.lint.src)
     .pipe(eslint())
@@ -200,6 +223,7 @@ gulp.task('default', function(done) {
       'images',
       'plugins',
       'styles_less',
+      'styles_sass',
       'vendors',
       'lint',
       'scripts',

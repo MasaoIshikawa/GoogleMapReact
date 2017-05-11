@@ -19,7 +19,7 @@ class Root extends React.Component {
     const {navigation} = this.props
     // console.log('navi = ', navigation)
     return (
-      <div id='body'>
+      <div id='root'>
         {this.props.children}          
       </div>
     )

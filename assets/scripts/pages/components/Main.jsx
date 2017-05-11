@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import classNames from 'classnames';
 
 import GoogleMapReact from 'google-map-react';
+import GMap from './GMap';
 
 const AnyReactComponent = ({ text }) => (
   <div style={{
@@ -28,16 +29,7 @@ export default class Main extends React.Component {
 
   render() {
     return (
-      <GoogleMapReact
-        defaultCenter={this.props.center}
-        defaultZoom={this.props.zoom}
-      >
-        <AnyReactComponent
-          lat={59.955413}
-          lng={30.337844}
-          text={'Kreyser Avrora'}
-        />
-      </GoogleMapReact>
+      <GMap/>
     );
   }
 }
