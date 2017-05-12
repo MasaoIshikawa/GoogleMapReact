@@ -7,8 +7,8 @@ import supercluster from 'points-cluster';
 import { susolvkaCoords, markersData } from './data/fakeData';
 
 const mapDefault = {
-  center: {lat: -6, lng: -40},
-  zoom: 8
+  center: {lat: -14, lng: -50},
+  zoom: 4
 };
 
 export const gMap = ({

@@ -12,12 +12,23 @@ import {markersData_Address} from './data/branches';
 export default class Main extends React.Component {  
   state = {
     data: [],
+    filteredData: [],
     detail: null,
     showDetail: false,
+    storeType: [],
+    salesType: [],
+    classification: [],
+    masterBranch: [],
+    status: [],
   }
   componentDidMount() {
     let data = [];
     let number = 0;
+    let storeType = ['All'];
+    let salesType = ['All'];
+    let classification = ['All'];
+    let masterBranch = ['All'];
+    let status = ['All'];
     _.map(markersData_Address, (m, index) => {      
       // if(index < 10)
       data.push({
@@ -27,8 +38,24 @@ export default class Main extends React.Component {
         number: index,
         detail: m
       });
+      if(storeType.indexOf(m.storeType) == -1)
+        storeType.push(m.storeType);
+      if(classification.indexOf(m.classification) == -1)
+        classification.push(m.classification);
+      if(masterBranch.indexOf(m.masterBranch) == -1)
+        masterBranch.push(m.masterBranch);
+      if(status.indexOf(m.status) == -1)
+        status.push(m.status);
+    });    
+    this.setState({
+      data: data, 
+      filteredData: data.slice(),
+      storeType: storeType.sort(), 
+      salesType: salesType.sort(), 
+      classification: classification.sort(), 
+      masterBranch: masterBranch.sort(),
+      status: status.sort(),
     });
-    this.setState({data: data});
   }
 
   onClick(index){
@@ -40,22 +67,98 @@ export default class Main extends React.Component {
     }    
   }
 
+  onChange_dropdown(e){
+    let storeType = this.refs.storeType.value;
+    let salesType = this.refs.salesType.value;
+    let classification = this.refs.classification.value;
+    let masterBranch = this.refs.masterBranch.value;
+    let status = this.refs.status.value;
+
+    // console.log(storeType, salesType, classification, masterBranch, status);
+    let {data} = this.state;
+    let filtered = [];
+    _.map(data, (d, index)=>{
+      let exclude = false
+      if(storeType != 'All' && storeType != d.detail.storeType)
+        exclude = true
+      if(salesType != 'All' && salesType != d.detail.salesType)
+        exclude = true
+      if(classification != 'All' && classification != d.detail.classification)
+        exclude = true
+      if(masterBranch != 'All' && masterBranch != d.detail.masterBranch)
+        exclude = true
+      if(status != 'All' && status != d.detail.status)
+        exclude = true
+      if(!exclude){
+        filtered.push(d);
+      }
+    });
+    this.setState({filteredData: filtered});
+  }
+
   onClick_close(){
     this.setState({showDetail: false})
   }
 
   render() {
-    const {detail, showDetail} = this.state
+    const {detail, showDetail, filteredData, storeType, salesType, classification, masterBranch, status} = this.state
+
+    let dropdown_storeType = _.map(storeType, (type, index)=>{
+      return (<option key={type} value={type}>{type}</option>)
+    })
+    let dropdown_salesType = _.map(salesType, (type, index)=>{
+      return (<option key={type} value={type}>{type}</option>)
+    })
+    let dropdown_classification = _.map(classification, (type, index)=>{
+      return (<option key={type} value={type}>{type}</option>)
+    })
+    let dropdown_masterBranch = _.map(masterBranch, (type, index)=>{
+      return (<option key={type} value={type}>{type}</option>)
+    })
+    let dropdown_status = _.map(status, (type, index)=>{
+      return (<option key={type} value={type}>{type}</option>)
+    })
+
     return (
       <div className='layout'>
         <header className='header'>
-          <div>
-            Clustering example google-map-react (zoom, move to play with)
-          </div>          
+          <div className='dropdown'>
+            Store Type: 
+            <select ref='storeType' onChange={::this.onChange_dropdown}>
+              {dropdown_storeType}
+            </select>
+          </div>
+          <div className='dropdown'>
+            Sales Type: 
+            <select ref='salesType' onChange={::this.onChange_dropdown}>
+              {dropdown_salesType}
+            </select>
+          </div>
+          <div className='dropdown'>
+            Classification: 
+            <select ref='classification' onChange={::this.onChange_dropdown}>
+              {dropdown_classification}
+            </select>
+          </div>
+          <div className='dropdown'>
+            Master Branch: 
+            <select ref='masterBranch' onChange={::this.onChange_dropdown}>
+              {dropdown_masterBranch}
+            </select>
+          </div>
+          <div className='dropdown'>
+            Status: 
+            <select ref='status' onChange={::this.onChange_dropdown}>
+              {dropdown_status}
+            </select>
+          </div>
+          <div className='dropdown'>
+            Showing: {filteredData.length}
+          </div>
         </header>
         <main className='main'>
           <div className='map'>
-            <GMap markers={this.state.data} onClick={::this.onClick}/>
+            <GMap markers={filteredData} onClick={::this.onClick}/>
           </div>
           {detail && showDetail && 
           <div className='detail_panel'>
