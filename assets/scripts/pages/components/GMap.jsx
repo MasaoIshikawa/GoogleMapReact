@@ -6,11 +6,15 @@ import SimpleMarker from './markers/SimpleMarker';
 import supercluster from 'points-cluster';
 import { susolvkaCoords, markersData } from './data/fakeData';
 
-const centerCoords = {lat: -6, lng: -40}
+const mapDefault = {
+  center: {lat: -6, lng: -40},
+  zoom: 8
+};
+
 export const gMap = ({
   style, hoverDistance, options,
   mapProps: { center, zoom },
-  onChange, onChildMouseEnter, onChildMouseLeave,
+  onChange, onChildClick, onChildMouseEnter, onChildMouseLeave,
   clusters,
 }) => (
   <GoogleMapReact
@@ -20,6 +24,7 @@ export const gMap = ({
     center={center}
     zoom={zoom}
     onChange={onChange}
+    onChildClick={onChildClick}
     onChildMouseEnter={onChildMouseEnter}
     onChildMouseLeave={onChildMouseLeave}
   >
@@ -56,6 +61,11 @@ export const gMapHOC = compose(
   //   markersData
   // ),
   withState(
+    'clickedMarkerId',
+    'setClickedMarkerId',
+    -1
+  ),
+  withState(
     'hoveredMarkerId',
     'setHoveredMarkerId',
     -1
@@ -64,8 +74,8 @@ export const gMapHOC = compose(
     'mapProps',
     'setMapProps',
     {
-      center: centerCoords,
-      zoom: 8,
+      center: mapDefault.center,
+      zoom: mapDefault.zoom,
     }
   ),
   // describe events
@@ -74,12 +84,17 @@ export const gMapHOC = compose(
       setMapProps({ center, zoom, bounds });
     },
 
+    onChildClick: ({ setClickedMarkerId }) => (clickKey, { number }) => {
+      setClickedMarkerId(number);
+    },
+
     onChildMouseEnter: ({ setHoveredMarkerId }) => (hoverKey, { id }) => {
       setHoveredMarkerId(id);
     },
 
-    onChildMouseLeave: ({ setHoveredMarkerId }) => (/* hoverKey, childProps */) => {
+    onChildMouseLeave: ({ setHoveredMarkerId, setClickedMarkerId }) => (/* hoverKey, childProps */) => {
       setHoveredMarkerId(-1);
+      // setClickedMarkerId(-1);
     },
   }),
   // precalculate clusters if markers data has changed
@@ -124,6 +139,12 @@ export const gMapHOC = compose(
           hovered: id === hoveredMarkerId,
         })),
     })
+  ),
+  withPropsOnChange(
+    ['clickedMarkerId'],
+    ({ onClick, clickedMarkerId }) => {
+      onClick(clickedMarkerId);
+    }
   ),
 );
 

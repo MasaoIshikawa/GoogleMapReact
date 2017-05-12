@@ -1,3 +1,5 @@
+body
+  margin: 0
 .layout
   display: flex
   min-height: 100vh
@@ -21,11 +23,25 @@
   margin: 0.3em
   background-size: contain
   background-repeat: no-repeat
-  background-image: url('https://avatars2.githubusercontent.com/u/5077042?v=3&s=40')
 
 .main
   flex: 1
   display: flex
+  .map
+    width: 62%
+    display: flex
+  .detail_panel
+    width: 38%
+    border: 1px solid grey
+    .title
+      background: #ccc
+      height: 30px
+      line-height: 30px
+      padding: 5px 10px
+      border-bottom: 2px solid #222
+    .details
+      padding: 5px 10px
+
 
 .footer
   height: 2em

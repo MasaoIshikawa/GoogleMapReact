@@ -9,7 +9,7 @@ const greatPlaceStyle = {
   left: -K_SIZE / 2,
   top: -K_SIZE / 2,
 
-  border: '5px solid #f44336',
+  border: '5px solid red',
   borderRadius: K_SIZE,
   backgroundColor: 'white',
   textAlign: 'center',
@@ -21,10 +21,10 @@ const greatPlaceStyle = {
   cursor: 'pointer'
 };
 
-const greatPlaceStyleHover = {
+const greatPlaceStyleOk = {
   ...greatPlaceStyle,
-  border: '5px solid #3f51b5',
-  color: '#f44336'
+  border: '5px solid green',
+  color: '#3f51b5',
 };
 
-export {greatPlaceStyle, greatPlaceStyleHover, K_SIZE};
+export {greatPlaceStyle, greatPlaceStyleOk, K_SIZE};

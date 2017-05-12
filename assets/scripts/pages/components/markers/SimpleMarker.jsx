@@ -3,7 +3,7 @@ import { defaultProps, compose } from 'recompose';
 // import mapPropsOnChange from 'recompose/mapPropsOnChange';
 import { Motion } from 'react-motion';
 import { clusterMarkerHOC } from './ClusterMarker';
-import {greatPlaceStyle, greatPlaceStyleHover} from '../data/marker';
+import {greatPlaceStyle, greatPlaceStyleOk} from '../data/marker';
 
 
 export class simpleMarker extends React.Component{
@@ -12,15 +12,19 @@ export class simpleMarker extends React.Component{
   }
 
   render(){
-    const {styles, defaultMotionStyle, motionStyle, number} = this.props
-    const style = this.props.$hover ? greatPlaceStyleHover : greatPlaceStyle;
-    console.log('render', this.props);
+    const {styles, defaultMotionStyle, motionStyle, number, detail} = this.props
+
+    const style = detail.status.toLowerCase() == 'ok' ? greatPlaceStyleOk : greatPlaceStyle;
+    // console.log('render', this.props);
     return (      
       <div className="hint hint--html hint--info hint--top" style={style}>
           {number}
-          {this.props.$hover && 
-            <div style={{width: 80}} className="hint__content">
-            Сlick me
+          {this.props.hovered && 
+            <div className="hint__content detail_box">
+              <div className='detail_line'> <div className='field'>Manager:</div> <div className='value'>{detail.manager}</div></div>
+              <div className='detail_line'> <div className='field'>Phone: </div> <div className='value'>{detail.phone}</div></div>
+              <div className='detail_line'> <div className='field'>Address: </div> <div className='value'>{detail.address}</div></div>
+              <div className='detail_line'> <div className='field'>Status: </div> <div className='value'>{detail.status}</div></div>
             </div>
           }
        </div>

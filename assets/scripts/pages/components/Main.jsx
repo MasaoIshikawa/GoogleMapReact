@@ -8,38 +8,17 @@ import GoogleMapReact from 'google-map-react';
 import GMap from './GMap';
 import {markersData_Address} from './data/branches';
 
-const AnyReactComponent = ({ text }) => (
-  <div style={{
-    position: 'relative', color: 'white', background: 'red',
-    height: 40, width: 60, top: -20, left: -30,    
-  }}>
-    {text}
-  </div>
-);
-
-
 @withRouter
-export default class Main extends React.Component {
-  static defaultProps = {
-    center: {lat: 59.95, lng: 30.33},
-    zoom: 11
-  };
-
+export default class Main extends React.Component {  
   state = {
-    data: []
-  }
-
-  handleNavigation() {
-    this.props.router.push('/');
+    data: [],
+    detail: null
   }
   componentDidMount() {
-    var geocoder = new google.maps.Geocoder();
-    //var address = "new york";
-
-    // console.log(markersData_Address);
     let data = [];
     let number = 0;
     _.map(markersData_Address, (m, index) => {      
+      // if(index < 10)
       data.push({
         id: index,
         lat: parseFloat(m.lat),
@@ -51,9 +30,46 @@ export default class Main extends React.Component {
     this.setState({data: data});
   }
 
+  onClick(index){
+    const {data} = this.state;
+    if(data.length > index && index >= 0){
+      let detail = data[index].detail;
+      detail.number = index;
+      this.setState({detail: detail});
+    }    
+  }
+
   render() {
+    const {detail} = this.state
     return (
-      <GMap markers={this.state.data}/>
+      <div className='layout'>
+        <header className='header'>
+          <div>
+            Clustering example google-map-react (zoom, move to play with)
+          </div>          
+        </header>
+        <main className='main'>
+          <div className='map'>
+            <GMap markers={this.state.data} onClick={::this.onClick}/>
+          </div>
+          {detail && 
+          <div className='detail_panel'>
+            <div className='title'> Details of Branch: {detail.branch}</div>
+            <div className='details'>
+              <div className='detail_line'><div className='field'>Number:</div> <div className='value'>{detail.number}</div></div>
+              <div className='detail_line'><div className='field'>Manager:</div> <div className='value'>{detail.manager}</div></div>
+              <div className='detail_line'><div className='field'>Address:</div> <div className='value'>{detail.address}</div></div>
+              <div className='detail_line'><div className='field'>Phone:</div> <div className='value'>{detail.phone}</div></div>
+              <div className='detail_line'><div className='field'>Store Type:</div> <div className='value'>{detail.storeType}</div></div>
+              <div className='detail_line'><div className='field'>Sales Type:</div> <div className='value'>Local</div></div>
+              <div className='detail_line'><div className='field'>Classification:</div> <div className='value'>{detail.classification}</div></div>
+              <div className='detail_line'><div className='field'>Master Branch:</div> <div className='value'>{detail.masterBranch}</div></div>
+              <div className='detail_line'><div className='field'>STATUS:</div> <div className='value'>{detail.status}</div></div>
+            </div>
+          </div>
+          }
+        </main>
+      </div>
     );
   }
 }
