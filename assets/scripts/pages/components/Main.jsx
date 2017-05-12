@@ -44,6 +44,7 @@ export default class Main extends React.Component {
         id: index,
         lat: parseFloat(m.lat),
         lng: parseFloat(m.long),
+        number: index,
         detail: m
       });
     });

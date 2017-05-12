@@ -12,29 +12,18 @@ export class simpleMarker extends React.Component{
   }
 
   render(){
-    const {styles, defaultMotionStyle, motionStyle} = this.props
+    const {styles, defaultMotionStyle, motionStyle, number} = this.props
     const style = this.props.$hover ? greatPlaceStyleHover : greatPlaceStyle;
     console.log('render', this.props);
-    return (
-      <Motion
-        defaultStyle={defaultMotionStyle}
-        style={motionStyle}
-      >
-      {
-        ({ scale }) => (
-          <div
-            className='marker1'
-            style={{
-              transform: `translate3D(0,0,0) scale(${scale}, ${scale})`,
-            }}
-          >
-           <div style={style}>
-              vdg
-           </div>
-          </div>
-        )
-      }
-      </Motion>
+    return (      
+      <div className="hint hint--html hint--info hint--top" style={style}>
+          {number}
+          {this.props.$hover && 
+            <div style={{width: 80}} className="hint__content">
+            Сlick me
+            </div>
+          }
+       </div>
     );
   }
 }
@@ -50,7 +39,7 @@ export const simpleMarkerHOC = compose(
   defaultProps({
     initialScale: 0.3,
     defaultScale: 0.6,
-    hoveredScale: 0.75,
+    hoveredScale: 0.7,
   }),
   // resuse HOC
   clusterMarkerHOC

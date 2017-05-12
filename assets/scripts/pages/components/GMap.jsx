@@ -6,7 +6,7 @@ import SimpleMarker from './markers/SimpleMarker';
 import supercluster from 'points-cluster';
 import { susolvkaCoords, markersData } from './data/fakeData';
 
-const centerCoords = {lat: -7.0796144, lng: -41.432841800000006}
+const centerCoords = {lat: -6, lng: -40}
 export const gMap = ({
   style, hoverDistance, options,
   mapProps: { center, zoom },
@@ -65,7 +65,7 @@ export const gMapHOC = compose(
     'setMapProps',
     {
       center: centerCoords,
-      zoom: 10,
+      zoom: 8,
     }
   ),
   // describe events
@@ -107,6 +107,7 @@ export const gMapHOC = compose(
             lng: wx,
             text: numPoints,
             detail: points[0].detail,
+            number: points[0].number,
             numPoints,
             id: `${numPoints}_${points[0].id}`,
           }))

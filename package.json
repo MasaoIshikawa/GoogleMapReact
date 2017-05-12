@@ -63,6 +63,7 @@
     "gm": "^1.23.0",
     "google-map-react": "^0.24.0",
     "history": "^3.2.1",
+    "html-hint": "^0.2.4",
     "immutable": "^3.7.5",
     "isomorphic-fetch": "^2.2.0",
     "jquery": "^3.1.1",
