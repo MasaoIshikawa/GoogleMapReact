@@ -166,9 +166,7 @@ export default class Main extends React.Component {
               <div className='detail_title'>Details of Branch: {detail.branch}</div>
               <div className='close_button' onClick={::this.onClick_close}/>
             </div>
-            <div className='details'>
-              <div className='detail_line'><div className='field'>Number:</div> <div className='value'>{detail.number}</div></div>
-              <div className='detail_line'><div className='field'>Branch:</div> <div className='value'>{detail.branch}</div></div>
+            <div className='details'>               
               <div className='detail_line'><div className='field'>Manager:</div> <div className='value'>{detail.manager}</div></div>
               <div className='detail_line'><div className='field'>Address:</div> <div className='value'>{detail.address}</div></div>
               <div className='detail_line'><div className='field'>Phone:</div> <div className='value'>{detail.phone}</div></div>

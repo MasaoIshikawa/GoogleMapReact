@@ -18,7 +18,7 @@ export class simpleMarker extends React.Component{
     // console.log('render', this.props);
     return (      
       <div className="hint hint--html hint--info hint--top" style={style}>
-          {number}
+          {detail.branch}
           {this.props.hovered && 
             <div className="hint__content detail_box">
               <div className='detail_line'> <div className='field'>Manager:</div> <div className='value'>{detail.manager}</div></div>
