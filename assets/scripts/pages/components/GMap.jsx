@@ -6,6 +6,7 @@ import SimpleMarker from './markers/SimpleMarker';
 import supercluster from 'points-cluster';
 import { susolvkaCoords, markersData } from './data/fakeData';
 
+const centerCoords = {lat: -7.0796144, lng: -41.432841800000006}
 export const gMap = ({
   style, hoverDistance, options,
   mapProps: { center, zoom },
@@ -49,11 +50,11 @@ export const gMapHOC = compose(
     },
   }),
   // withState so you could change markers if you want
-  withState(
-    'markers',
-    'setMarkers',
-    markersData
-  ),
+  // withState(
+  //   'markers',
+  //   'setMarkers',
+  //   markersData
+  // ),
   withState(
     'hoveredMarkerId',
     'setHoveredMarkerId',
@@ -63,7 +64,7 @@ export const gMapHOC = compose(
     'mapProps',
     'setMapProps',
     {
-      center: susolvkaCoords,
+      center: centerCoords,
       zoom: 10,
     }
   ),
