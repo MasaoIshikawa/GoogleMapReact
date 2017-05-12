@@ -106,6 +106,7 @@ export const gMapHOC = compose(
             lat: wy,
             lng: wx,
             text: numPoints,
+            detail: points[0].detail,
             numPoints,
             id: `${numPoints}_${points[0].id}`,
           }))

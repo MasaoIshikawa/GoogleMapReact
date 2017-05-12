@@ -26,7 +26,7 @@ export default class Main extends React.Component {
   };
 
   state = {
-    data: [{lat: -7.0796144, lng: -41.432841800000006}]
+    data: []
   }
 
   handleNavigation() {
@@ -39,39 +39,15 @@ export default class Main extends React.Component {
     // console.log(markersData_Address);
     let data = [];
     let number = 0;
-    let self = this;
-    _.map(markersData_Address, (m, index) => {
-      let address = m.address + ', Brazil';
-      address = address.replace(/None /g, '');
-      
-      geocoder.geocode( { 'address': address}, function(results, status) {
-        // if(address == 'FELIPE DE OLIVEIRA PORTO ALEGRE RS 90630000, Brazil'){
-        //   console.log('-------------found');
-        // }
-        // console.log('address = ', address, results);
-        if (status == google.maps.GeocoderStatus.OK) {
-          var latitude = results[0].geometry.location.lat();
-          var longitude = results[0].geometry.location.lng();
-          data.push({id: index, lat: latitude, lng: longitude});
-          if(data.length> 7){
-            // if(markersData_Address.length - 1 == index){
-              console.log('called', data.length);
-              self.setState({data: data});
-            // }
-          }
-        }        
-      }); 
+    _.map(markersData_Address, (m, index) => {      
+      data.push({
+        id: index,
+        lat: parseFloat(m.lat),
+        lng: parseFloat(m.long),
+        detail: m
+      });
     });
-
-    // var address =   "FELIPE DE OLIVEIRA   PORTO ALEGRE RS 90630000, Brazil";
-    // geocoder.geocode( { 'address': address}, function(results, status) {
-    //     console.log('address = ', address, results);
-    //     if (status == google.maps.GeocoderStatus.OK) {
-    //       var latitude = results[0].geometry.location.lat();
-    //       var longitude = results[0].geometry.location.lng();
-    //       console.log('address = ', address, latitude, longitude);
-    //     } 
-    //   }); 
+    this.setState({data: data});
   }
 
   render() {
