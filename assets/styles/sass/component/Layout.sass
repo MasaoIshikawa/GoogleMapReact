@@ -28,17 +28,32 @@ body
   flex: 1
   display: flex
   .map
-    width: 62%
+    width: 100%
     display: flex
   .detail_panel
-    width: 38%
+    position: absolute
+    background: white
+    right: 0px
+    z-index: 1000000
+    width: 400px
     border: 1px solid grey
     .title
       background: #ccc
-      height: 30px
-      line-height: 30px
       padding: 5px 10px
       border-bottom: 2px solid #222
+      height: 30px
+      .detail_title
+        float: left        
+        line-height: 30px
+      .close_button
+        cursor: pointer
+        background: url('assets/resources/images/close.png')
+        background-size: 20px 20px
+        background-repeat: no-repeat
+        width: 20px
+        height: 20px
+        margin-top: 5px
+        float: right
     .details
       padding: 5px 10px
 

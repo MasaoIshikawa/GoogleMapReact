@@ -61,11 +61,6 @@ export const gMapHOC = compose(
   //   markersData
   // ),
   withState(
-    'clickedMarkerId',
-    'setClickedMarkerId',
-    -1
-  ),
-  withState(
     'hoveredMarkerId',
     'setHoveredMarkerId',
     -1
@@ -84,8 +79,8 @@ export const gMapHOC = compose(
       setMapProps({ center, zoom, bounds });
     },
 
-    onChildClick: ({ setClickedMarkerId }) => (clickKey, { number }) => {
-      setClickedMarkerId(number);
+    onChildClick: ({ onClick }) => (clickKey, { number }) => {
+      onClick(number);
     },
 
     onChildMouseEnter: ({ setHoveredMarkerId }) => (hoverKey, { id }) => {
@@ -139,12 +134,6 @@ export const gMapHOC = compose(
           hovered: id === hoveredMarkerId,
         })),
     })
-  ),
-  withPropsOnChange(
-    ['clickedMarkerId'],
-    ({ onClick, clickedMarkerId }) => {
-      onClick(clickedMarkerId);
-    }
   ),
 );
 
