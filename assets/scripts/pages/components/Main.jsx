@@ -73,6 +73,8 @@ export default class Main extends React.Component {
               <div className='detail_line'><div className='field'>Sales Type:</div> <div className='value'>Local</div></div>
               <div className='detail_line'><div className='field'>Classification:</div> <div className='value'>{detail.classification}</div></div>
               <div className='detail_line'><div className='field'>Master Branch:</div> <div className='value'>{detail.masterBranch}</div></div>
+              <div className='detail_line'><div className='field'>Latitude:</div> <div className='value'>{detail.lat}</div></div>
+              <div className='detail_line'><div className='field'>Longitude:</div> <div className='value'>{detail.long}</div></div>
               <div className='detail_line'><div className='field'>STATUS:</div> <div className='value'>{detail.status}</div></div>
             </div>
           </div>
