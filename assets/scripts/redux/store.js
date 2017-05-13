@@ -19,7 +19,7 @@ const logger = store => next => action => {
 }
 const initialState = {
     routing: {
-       location: '/map',
+       location: '/main',
     }
 }
 const debug = process.env.NODE_ENV !== 'production'
@@ -38,6 +38,7 @@ const store = factory(combineReducers({
   form: formReducer,
   navigation: require('./navigation/reducers'),
   notifications: require('./notifications/reducers'),
+  branches: require('./branches/reducers'),
 }), initialState)
 //  
 

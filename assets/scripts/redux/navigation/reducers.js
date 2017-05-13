@@ -9,7 +9,6 @@ const initialState = Immutable.Map({
 export default handleActions({
   [UPDATE_LOCATION]: (state, action) => {    
     var path = action.payload.pathname
-    console.log(path)
 
     return state.withMutations(map => {
       map

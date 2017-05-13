@@ -23,6 +23,7 @@ app.use(bodyParser.json({
   type: ['application/json', 'application/vnd.api+json']
 }))
 app.use(express.static('dist'))
+app.use(require('./api'))
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))

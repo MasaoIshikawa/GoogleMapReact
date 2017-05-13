@@ -1,14 +1,30 @@
 import React from 'react';
 import _ from 'lodash';
+import {connect} from 'react-redux';
 
 import { withRouter } from 'react-router';
 import classNames from 'classnames';
 
 import GoogleMapReact from 'google-map-react';
 import GMap from './GMap';
-import {markersData_Address} from './data/branches';
+import Notifications from '../../core/components/notifications/Notifications'
+//import {markersData_Address} from './data/branches';
 
-@withRouter
+import {FETCH_BRANCHES} from '../../redux/branches/actions';
+const STATE_STATUS_INIT = 0
+const STATE_STATUS_LOADING = 1
+const STATE_STATUS_LOADING_SUCCESSED = 2
+const STATE_STATUS_LOADING_FAILED = 3
+
+@connect(
+  (state) => {    
+    const branches = state.branches.get('branches').toJS()    
+    return {
+      branches
+    }
+  },
+  {FETCH_BRANCHES}
+)
 export default class Main extends React.Component {  
   state = {
     data: [],
@@ -22,6 +38,19 @@ export default class Main extends React.Component {
     status: [],
   }
   componentDidMount() {
+    const {FETCH_BRANCHES} = this.props
+    const loadingSetter = (val) => () =>{
+      this.setState({loading: val})      
+    }
+    Promise.resolve(FETCH_BRANCHES())
+      .catch(loadingSetter(STATE_STATUS_LOADING_FAILED))
+      .then(loadingSetter(STATE_STATUS_LOADING_SUCCESSED))
+    loadingSetter(STATE_STATUS_LOADING)()  
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.branches.length == 0)
+      return;
     let data = [];
     let number = 0;
     let storeType = ['All'];
@@ -29,7 +58,7 @@ export default class Main extends React.Component {
     let classification = ['All'];
     let masterBranch = ['All'];
     let status = ['All'];
-    _.map(markersData_Address, (m, index) => {      
+    _.map(nextProps.branches, (m, index) => {      
       // if(index < 10)
       data.push({
         id: index,
@@ -121,6 +150,7 @@ export default class Main extends React.Component {
 
     return (
       <div className='layout'>
+        <Notifications />
         <header className='header'>
           <div className='dropdown'>
             Store Type: 
