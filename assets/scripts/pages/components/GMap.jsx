@@ -78,8 +78,11 @@ export const gMapHOC = compose(
       setMapProps({ center, zoom, bounds });
     },
 
-    onChildClick: ({ onClick }) => (clickKey, { number }) => {
-      onClick(number);
+    onChildClick: ({ onClick, hoveredMarkerId }) => (clickKey, { number }) => {
+      let ids = hoveredMarkerId.split('_');
+      let clusterIdentifier = parseInt(ids[0]);
+      if(clusterIdentifier == 1) // not cluster      
+        onClick(number);
     },
 
     onChildMouseEnter: ({ setHoveredMarkerId }) => (hoverKey, { id }) => {
