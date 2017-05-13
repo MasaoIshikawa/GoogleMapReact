@@ -4,7 +4,6 @@ import GoogleMapReact from 'google-map-react';
 import ClusterMarker from './markers/ClusterMarker';
 import SimpleMarker from './markers/SimpleMarker';
 import supercluster from 'points-cluster';
-import { susolvkaCoords, markersData } from './data/fakeData';
 
 const mapDefault = {
   center: {lat: -14, lng: -50},
